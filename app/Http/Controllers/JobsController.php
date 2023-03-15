@@ -73,4 +73,45 @@ class JobsController extends Controller
         $job = Job::where(['id'=> $id])->get();
         return $job;
     }
+    public function get_jobs_type($type){
+        $job = Job::Where(['type' => $type ,'status'=>'hiển thị'])->orderBy('created_at','desc')->with('company')->paginate(10);
+        return $job;
+    }
+    public function get_all_jobs(){
+        $job = Job::Where(['status'=>'hiển thị'])->orderBy('created_at','desc')->with('company')->paginate(10);
+        return $job;
+    }
+    public function get_list_jobs(){
+        $job = Job::with('company')->withCount('applications')->orderBy('created_at','desc')->get();
+        return $job;
+    }
+    public function delete_job($id){
+        Job::where(['id'=>$id])->delete();
+        return back();
+    }
+    public function hide_job($id){
+        $job = Job::find($id);
+        $job->status = 'hết hạn';
+        $job->save();
+        return back();
+    }
+    public function query_job(){
+        $query = [];
+        $titles = Job::distinct()->pluck('title');
+        foreach($titles as $title){
+            $query[] = $title;
+        }
+        $positions = Job::distinct()->pluck('position');
+        foreach($positions as $position){
+            $query[] = $position;
+        }
+        sort($query);
+        return $query;
+    }
+    public function search_job($query){
+        $jobs = Job::where('title', 'LIKE', '%'.$query.'%')->with('company')
+                    ->orWhere('position', 'LIKE', '%'.$query.'%')
+                    ->paginate();
+        return $jobs;
+    }
 }

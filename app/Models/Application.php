@@ -10,7 +10,7 @@ class Application extends Model
     protected $table = 'applications';
 
     protected $fillable = [
-        'job_id', 'candidate_name', 'candidate_email', 'candidate_phone'
+        'job_id',"user_id", 'email', 'description','full_name','resume'
     ];
 
     public function job()

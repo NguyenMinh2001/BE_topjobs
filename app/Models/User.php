@@ -17,11 +17,18 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    public function likes(){
+        return $this->hasMany(Like::class,'user_id');
+    }
     public function Business_Info(){
         return $this->hasMany(Business_Info::class,'id_business');
     }
+    public function Jobs(){
+        return $this->hasMany(Job::class,'company_id','id');
+    }
     protected $fillable = [
         'name',
+        'role',
         'email',
         'password',
         'avatar',

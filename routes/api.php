@@ -3,6 +3,8 @@ use App\Http\Controllers\AuthApi;
 use App\Http\Controllers\Business_InfoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JobsController;
+use App\Http\Controllers\LikeControler;
+use App\Http\Controllers\ApplicationController;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -41,23 +43,39 @@ Route::get('test',function(){
 Route::post('register',[AuthApi::class,'register']);
 Route::post('login',[AuthApi::class,'login']);
 Route::middleware('auth:sanctum')->group(function(){
+    // Application
+    Route::post('application',[ApplicationController::class,'create_application']);
+    Route::get('user/application',[ApplicationController::class,'get_application_user']);
+
+    // favorite
+    Route::get('favorite/{id_job}',[LikeControler::class,'get_favorite']);
+    Route::post('favorite',[LikeControler::class,'favorite']);
+    Route::get('favorites',[LikeControler::class,'get_all_favorite']);
+    // Route::get('job_favorite/{id}',[LikeControler::class,'get_job_favorite']);
+    Route::delete('favorite/{id_post}',[LikeControler::class,'delete_favorite']);
+    //user   
     Route::post('logout',[AuthApi::class,'logout']);
-    Route::put('user/{id}',[AuthApi::class,'update_user']);
+    Route::post('user/{id}',[AuthApi::class,'update_user']);
     Route::get('user',function(Request $request){
         return $request->user();
     });
-    
+    // Business_info
     Route::get('Business_info/{id}',[Business_InfoController::class,'get_info']);
     Route::post('Business_info',[Business_InfoController::class,'post_info']);
     Route::put('Business_info/{id}',[Business_InfoController::class,'update_info']);
-    
+    // Jobs
     Route::post('Jobs/{id}',[JobsController::class,'post_jobs']);
     Route::put('Jobs/{id}',[JobsController::class,'update_jobs']);
     Route::get('Jobs/{id}',[JobsController::class,'get_jobs']);
     Route::get('Job/{id}',[JobsController::class,'get_job']);
 });
 // Route::post('/')
+Route::get('/info_bussiness/{id}',[UserController::class, 'get_info']);
 Route::get('/user_bussiness',[UserController::class,'get_all_user_bussiness']);
-Route::middleware('isAdmin')->group(function(){
-   
-});
+Route::get('Jobs-type/{type}',[JobsController::class,'get_jobs_type']);
+Route::get('Jobs',[JobsController::class,'get_all_jobs']);
+Route::get('List_Jobs',[JobsController::class,'get_list_jobs']);
+Route::get('query_job',[JobsController::class,'query_job']);
+Route::get('search/{query}',[JobsController::class,'search_job']);
+Route::get('test',[UserController::class,'test']);
+// Route::get('Job/{id}',[JobsController::class,'get_job']);

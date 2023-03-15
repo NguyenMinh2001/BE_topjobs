@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Console;
-
+use App\Models\Job;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,6 +17,20 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        // $schedule->call(function () {
+        //     // Lấy tất cả các bài đăng đã hết hạn
+        //     $expiredPosts = Job::where('deadline', '<', Carbon::now())->get();
+    
+        //     foreach ($expiredPosts as $post) {
+        //         // Ẩn bài đăng nếu chưa ẩn
+        //         if ($post->status=='hiển thị') {
+        //             $post->status = 'hết hạn';
+        //             $post->save();
+        //         }
+        //     }
+        // })->everyMinute();
+        $schedule->command('posts:hide-daily')->everyMinute();
+
     }
 
     /**

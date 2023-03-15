@@ -154,8 +154,8 @@
           </div>
         </div>
       </div>
-      <div class="row mt-4">
-        <div class="col-lg-7 mb-lg-0 mb-4">
+      <div style="height: 450px" class="row mt-4">
+        {{-- <div class="col-lg-7 mb-lg-0 mb-4">
           <div class="card z-index-2 h-100">
             <div class="card-header pb-0 pt-3 bg-transparent">
               <h6 class="text-capitalize">Sales overview</h6>
@@ -170,13 +170,13 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-5">
+        </div> --}}
+        <div class="col">
           <div class="card card-carousel overflow-hidden h-100 p-0">
             <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
               <div class="carousel-inner border-radius-lg h-100">
                 <div class="carousel-item h-100 active" style="background-image: url('./assets/img/carousel-1.jpg');
-      background-size: cover;">
+                background-size: cover;">
                   <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                     <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
                       <i class="ni ni-camera-compact text-dark opacity-10"></i>
@@ -186,7 +186,7 @@
                   </div>
                 </div>
                 <div class="carousel-item h-100" style="background-image: url('./assets/img/carousel-2.jpg');
-      background-size: cover;">
+                    background-size: cover;">
                   <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                     <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
                       <i class="ni ni-bulb-61 text-dark opacity-10"></i>
@@ -196,7 +196,7 @@
                   </div>
                 </div>
                 <div class="carousel-item h-100" style="background-image: url('./assets/img/carousel-3.jpg');
-      background-size: cover;">
+                    background-size: cover;">
                   <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                     <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
                       <i class="ni ni-trophy text-dark opacity-10"></i>

@@ -162,6 +162,7 @@ function Table() {
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Thông tin</th>
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Đơn xác thực</th>
                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Trạng thái</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Số bài viết</th>
                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ngày tạo trên hệ thống</th>
                 <th class="text-secondary opacity-7"></th>
               </tr>
@@ -194,6 +195,9 @@ function Table() {
                       <span class="badge badge-sm bg-gradient-secondary">Chưa xác thực</span>
                     )}
 
+                  </td>
+                  <td class="align-middle text-center">
+                    <a type="button" class="text-info font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">xem tin<br/>{userinpage.jobs_count}</a>
                   </td>
                   <td class="align-middle text-center">
                     <span class="text-secondary text-xs font-weight-bold">{new Date(userinpage.created_at).toString()}</span>

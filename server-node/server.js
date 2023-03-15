@@ -1,9 +1,25 @@
+const os = require('os');
+
+function getLocalIpAddress() {
+  const interfaces = os.networkInterfaces();
+  for (const interfaceName in interfaces) {
+    const interfacesInfo = interfaces[interfaceName];
+    for (let i = 0; i < interfacesInfo.length; i++) {
+      const interfaceInfo = interfacesInfo[i];
+      if (interfaceInfo.family === 'IPv4' && !interfaceInfo.internal) {
+        return interfaceInfo.address;
+      }
+    }
+  }
+  return 'localhost';
+}
+const ipAddress = getLocalIpAddress();
 var http = require('http');
 const express = require('express');
 const app = express();
 const { Server } = require('socket.io')
 port = 6000;
-ip = '192.168.122.82';
+ip = ipAddress;
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
     cors: {
@@ -13,9 +29,14 @@ const io = new Server(httpServer, {
 });
 io.on('connection', function (socket) {
     console.log(`User ${socket.id} is connected.`);
+    socket.on('update-user',(data)=>{
+        // console.log('new')
+        // console.log(data)
+        io.emit('user:'+data.id,{ message: data })
+    })
     socket.on('post-info',(data)=>{
         // console.log('new')
-        // console.log(data.data.id_business)
+        // console.log(data)
         io.emit('info:'+data.data.id_business,{ message: data })
     })
     socket.on('post-job',(data)=>{
