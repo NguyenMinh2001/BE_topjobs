@@ -26,6 +26,15 @@ class User extends Authenticatable
     public function Jobs(){
         return $this->hasMany(Job::class,'company_id','id');
     }
+    public function Messages(){
+        return $this->hasMany(Messages::class,'user_id','id');
+    }
+    public function Tags(){
+        return $this->hasMany(Tag::class,'user_id','id');
+    }
+    public function Applications(){
+        return $this->hasMany(Application::class,'user_id','id');
+    }
     protected $fillable = [
         'name',
         'role',

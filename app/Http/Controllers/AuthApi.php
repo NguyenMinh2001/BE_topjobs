@@ -91,4 +91,12 @@ class AuthApi extends Controller
          }
          return redirect('login-admin')->with('danger','Đăng nhập thất bại vui lòng đăng nhập lại');
     }
+    public function logout_adimin(Request $request)
+    {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            Session::put('admin',null);
+            Session::put('email',null);
+            return redirect('/');
+    }
 }

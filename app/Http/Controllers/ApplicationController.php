@@ -28,7 +28,17 @@ class ApplicationController extends Controller
     
     public function get_application_user(Request $req){
         $user = $req->user();
-        $application = Application::where(['user_id'=>$user->id])->get();
-        return $application;
+        $applications = Application:: where('user_id',$user->id)
+                        ->distinct('resume','description','email','full_name','job_id')
+                        ->select('resume', 'email','full_name')
+                        ->get();
+        return $applications;
+    }
+    public function get_application_jobs(Request $req){
+        $user = $req->user();
+        $applications = Application::with('user','job')->whereHas('job',function($query) use($user){
+            $query->where(['company_id'=>$user->id]);
+        })->get();
+        return $applications;
     }
 }

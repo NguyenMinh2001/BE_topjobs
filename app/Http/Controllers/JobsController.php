@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Job;
+use App\Models\User;
+use App\Models\Application;
 use Illuminate\Http\Request;
 
 class JobsController extends Controller
@@ -14,6 +16,7 @@ class JobsController extends Controller
             'location' => 'required',
             'salary' => 'required',
             'type' => 'required',
+            'profession' => 'required',
             'requirement' => 'required',
             'benefit' => 'required',
             'deadline' => 'required',
@@ -26,6 +29,7 @@ class JobsController extends Controller
             'location' => $req->location,
             'salary' => $req->salary,
             'type' => $req->type,
+            'profession'=> $req->profession,
             'company_id' => $id,
             'requirement' => $req->requirement,
             'benefit' => $req->benefit,
@@ -42,6 +46,7 @@ class JobsController extends Controller
             'description'=> 'required',
             'location' => 'required',
             'salary' => 'required',
+            'profession' => 'required',
             'type' => 'required',
             'requirement' => 'required',
             'benefit' => 'required',
@@ -55,6 +60,7 @@ class JobsController extends Controller
             'location' => $req->location,
             'salary' => $req->salary,
             'type' => $req->type,
+            'profession'=>$req->profession,
             'company_id' => $req->company_id,
             'requirement' => $req->requirement,
             'benefit' => $req->benefit,
@@ -95,6 +101,18 @@ class JobsController extends Controller
         $job->save();
         return back();
     }
+    public function hiden_job($id){
+        $job = Job::find($id);
+        $job->status = 'bị ẩn';
+        $job->save();
+        return $job;
+    }
+    public function show_job($id){
+        $job = Job::find($id);
+        $job->status = 'hiển thị';
+        $job->save();
+        return $job;
+    }
     public function query_job(){
         $query = [];
         $titles = Job::distinct()->pluck('title');
@@ -113,5 +131,26 @@ class JobsController extends Controller
                     ->orWhere('position', 'LIKE', '%'.$query.'%')
                     ->paginate();
         return $jobs;
+    }
+    public function get_job_favorite(Request $req){
+        $user = $req->user();
+        $jobs =  Job::where(['status'=>'hiển thị'])->with('company')->whereHas('likes', function($query) use($user){ 
+            $query->where(['user_id'=>$user->id]);
+        })->get();
+        return $jobs;
+    }
+    public function get_job_application(Request $req){
+        $user = $req->user();
+        $jobs =  Job::where(['status'=>'hiển thị'])->with('company')->whereHas('applications', function($query) use($user){ 
+            $query->where(['user_id'=>$user->id]);
+        })->get();
+        return $jobs;
+    }
+    public function get_quantity(Request $req){
+        $user = $req->user();
+        $quantyti_job = Job::where('company_id',$user->id)->count();
+        $jobs_id = Job::where('company_id',$user->id)->pluck('id');
+        $quantyti_job = Application::whereIn('id',$jobs_id)->count();   
+        return $quantyti_job;
     }
 }

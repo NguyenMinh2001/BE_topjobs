@@ -10,7 +10,7 @@ class Job extends Model
     protected $table = 'jobs';
 
     protected $fillable = [
-        'title', 'description', 'salary', 'location', 'company_id','type','requirement','benefit','deadline','status','quantity','position'
+        'title', 'description', 'salary', 'location', 'company_id','type','requirement','benefit','deadline','status','quantity','position','profession'
     ];
 
     public function likes()

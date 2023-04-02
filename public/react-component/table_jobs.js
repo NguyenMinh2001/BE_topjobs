@@ -8,7 +8,7 @@ const ModalLoading = ({ show, success, closemodal,loading }) => {
     <div className={showHideClassName}>
       <div style={{alignSelf:"center",justifyContent:'center'}}  className='modal-loading-content'>
         <div style={{ justifyContent: 'center', alignItems: 'center',marginLeft: '40%',marginRight: '40%'}}>
-          {loading && <div class="loader"></div>}
+          {loading && <div class="spinner-border text-warning"></div>}
           {!loading && success && <img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" alt="" width={120} height={120}/>}
           
           {!loading && !success && <img src="https://www.safetydirect.ie/media/catalog/product/cache/0850e9227a745a9c00250207d917baf3/S/I/SIGN71814_a9ec.jpg" alt="" width={120} height={120}/>}
@@ -265,7 +265,21 @@ function Modal(props) {
                         }}>gửi thông tin công việc</p>
                     </td> 
                     <td  class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">gửi thông tin ứng viên</p>
+                        <p type="button" class="text-xs font-weight-bold mb-0"
+                        onClick={()=>{
+                          setLoading(true)
+                          setShow(true)
+                          axios.get(`/mail_applications/${jobsinpage.id}`).then(
+                            res => {
+                            setSuccess(true)
+                            setLoading(false)
+                            }
+                          ).catch(e =>{
+                            setSuccess(false)
+                            setLoading(false)
+                          })
+                        }}
+                        >gửi thông tin ứng viên</p>
                     </td>   
                     <td  class="align-middle text-center text-sm">
                         <p onClick={()=>{

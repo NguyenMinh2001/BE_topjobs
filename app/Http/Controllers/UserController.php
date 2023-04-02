@@ -21,6 +21,14 @@ class UserController extends Controller
        }
        return response()->json($user);
     }
+    public function get_all_user_application(){
+        $user = User::where(['role'=>2])->withCount('Applications')->get();
+    // $user = User::with('Business_Info')->get();
+        foreach($user as $users){
+                $users->Business_Info;
+        }
+       return response()->json($user);
+    }
     public function get_info($id){
         $user = User::where(['id'=>$id])->with('Business_Info')->first();
         return $user;
@@ -35,4 +43,5 @@ class UserController extends Controller
         // }
         return $user;
     }
+    
 }
